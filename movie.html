@@ -2,28 +2,14 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Movie</title>
-
 <style>
-body{
-background:#000;
-margin:0;
-}
-
-.player{
-width:100%;
-height:80vh;
-}
-
-iframe{
-width:100%;
-height:100%;
-border:none;
-}
+body{margin:0;background:#000;color:#fff;font-family:sans-serif;}
+.player{width:100%;height:80vh;}
+iframe{width:100%;height:100%;border:none;}
 </style>
-
 </head>
-
 <body>
 
 <div class="player">
@@ -31,19 +17,19 @@ border:none;
 </div>
 
 <script>
-
-const params=new URLSearchParams(location.search);
-const id=params.get("id");
+const params = new URLSearchParams(location.search);
+const id = params.get("id");
 
 fetch("movies.json")
-.then(r=>r.json())
+.then(res=>res.json())
 .then(data=>{
-
-const movie=data.find(m=>m.id==id);
-document.getElementById("player").src=movie.embed;
-
+    const movie = data.find(m=>m.id==id);
+    if(movie && movie.embed){
+        document.getElementById("player").src = movie.embed;
+    } else {
+        document.body.innerHTML = "<h2>الفيلم غير متوفر حالياً أو غير قانوني</h2>";
+    }
 });
-
 </script>
 
 </body>
