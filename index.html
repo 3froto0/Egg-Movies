@@ -1,104 +1,56 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Egg Movies</title>
-
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <style>
-body{
-background:#141414;
-color:#fff;
-font-family:sans-serif;
-margin:0;
-}
-
-header{
-padding:20px;
-font-size:24px;
-font-weight:bold;
-}
-
-.row{
-padding:20px;
-}
-
-.movies{
-display:flex;
-overflow-x:auto;
-gap:15px;
-}
-
-.card{
-min-width:200px;
-cursor:pointer;
-transition:0.3s;
-}
-
-.card img{
-width:100%;
-border-radius:8px;
-}
-
-.card:hover{
-transform:scale(1.1);
-}
+body{margin:0;font-family:'Roboto',sans-serif;background:#141414;color:#fff;}
+header{padding:20px;font-size:28px;font-weight:bold;text-align:center;background: linear-gradient(90deg,#ff416c,#ff4b2b);}
+.genre-section{padding:20px;}
+.genre-section h2{margin-bottom:10px;}
+.movies-row{display:flex;overflow-x:auto;gap:15px;}
+.card{min-width:200px;cursor:pointer;transition:0.3s;}
+.card img{width:100%;border-radius:8px;}
+.card:hover{transform:scale(1.1);}
 </style>
-
 </head>
-
 <body>
 
 <header>🎬 Egg Movies</header>
-
-<div class="row">
-<h2>🔥 Popular Movies</h2>
-<div class="movies" id="movies"></div>
-</div>
+<div id="content"></div>
 
 <script>
-
 fetch("movies.json")
 .then(res=>res.json())
 .then(data=>{
+    const genres = {};
+    data.forEach(m=>{
+        if(!m.embed) return; // تجاهل الأفلام بدون رابط كامل
+        if(!genres[m.genre]) genres[m.genre]=[];
+        genres[m.genre].push(m);
+    });
 
-const genres = {};
+    const content = document.getElementById("content");
+    Object.keys(genres).forEach(g=>{
+        const moviesHTML = genres[g].map(m=>`
+        <div class="card" onclick="openMovie('${m.id}')">
+            <img src="${m.poster}" alt="${m.title_ar}">
+        </div>`).join("");
 
-data.forEach(m=>{
-if(!genres[m.genre]) genres[m.genre]=[];
-genres[m.genre].push(m);
+        content.innerHTML += `
+        <div class="genre-section">
+            <h2>${g}</h2>
+            <div class="movies-row">${moviesHTML}</div>
+        </div>`;
+    });
 });
-
-const container=document.body;
-
-Object.keys(genres).forEach(g=>{
-
-container.innerHTML+=`
-<h2>${g}</h2>
-<div class="movies">
-${genres[g].map(m=>`
-<div class="card" onclick="openMovie('${m.id}')">
-<img src="${m.poster}">
-</div>
-`).join("")}
-</div>
-`;
-
-});
-
-});
-
 
 function openMovie(id){
-location.href="movie.html?id="+id;
+    location.href="movie.html?id="+id;
 }
-
 </script>
 
 </body>
 </html>
-
-
-
