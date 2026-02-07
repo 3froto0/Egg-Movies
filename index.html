@@ -64,21 +64,35 @@ fetch("movies.json")
 .then(res=>res.json())
 .then(data=>{
 
-const container=document.getElementById("movies");
+const genres = {};
 
-container.innerHTML=data.map(m=>`
+data.forEach(m=>{
+if(!genres[m.genre]) genres[m.genre]=[];
+genres[m.genre].push(m);
+});
+
+const container=document.body;
+
+Object.keys(genres).forEach(g=>{
+
+container.innerHTML+=`
+<h2>${g}</h2>
+<div class="movies">
+${genres[g].map(m=>`
 <div class="card" onclick="openMovie('${m.id}')">
 <img src="${m.poster}">
 </div>
-`).join("");
+`).join("")}
+</div>
+`;
 
 });
 
-function openMovie(id){
-location.href="movie.html?id="+id;
-}
+});
+
 
 </script>
 
 </body>
 </html>
+
