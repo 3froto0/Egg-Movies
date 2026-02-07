@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>Movie</title>
+
+<style>
+body{
+background:#000;
+margin:0;
+}
+
+.player{
+width:100%;
+height:80vh;
+}
+
+iframe{
+width:100%;
+height:100%;
+border:none;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="player">
+<iframe id="player" allowfullscreen></iframe>
+</div>
+
+<script>
+
+const params=new URLSearchParams(location.search);
+const id=params.get("id");
+
+fetch("movies.json")
+.then(r=>r.json())
+.then(data=>{
+
+const movie=data.find(m=>m.id==id);
+document.getElementById("player").src=movie.embed;
+
+});
+
+</script>
+
+</body>
+</html>

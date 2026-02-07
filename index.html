@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Egg Movies</title>
+
+<style>
+body{
+background:#141414;
+color:#fff;
+font-family:sans-serif;
+margin:0;
+}
+
+header{
+padding:20px;
+font-size:24px;
+font-weight:bold;
+}
+
+.row{
+padding:20px;
+}
+
+.movies{
+display:flex;
+overflow-x:auto;
+gap:15px;
+}
+
+.card{
+min-width:200px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.card img{
+width:100%;
+border-radius:8px;
+}
+
+.card:hover{
+transform:scale(1.1);
+}
+</style>
+
+</head>
+
+<body>
+
+<header>🎬 Egg Movies</header>
+
+<div class="row">
+<h2>🔥 Popular Movies</h2>
+<div class="movies" id="movies"></div>
+</div>
+
+<script>
+
+fetch("movies.json")
+.then(res=>res.json())
+.then(data=>{
+
+const container=document.getElementById("movies");
+
+container.innerHTML=data.map(m=>`
+<div class="card" onclick="openMovie('${m.id}')">
+<img src="${m.poster}">
+</div>
+`).join("");
+
+});
+
+function openMovie(id){
+location.href="movie.html?id="+id;
+}
+
+</script>
+
+</body>
+</html>

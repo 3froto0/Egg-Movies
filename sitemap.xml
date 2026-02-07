@@ -1,0 +1,11 @@
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+<url>
+<loc>https://YOUR_SITE.netlify.app/</loc>
+</url>
+
+<url>
+<loc>https://YOUR_SITE.netlify.app/movie.html?id=1</loc>
+</url>
+
+</urlset>
