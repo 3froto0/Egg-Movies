@@ -27,7 +27,6 @@ fetch("movies.json")
 .then(data=>{
     const genres = {};
     data.forEach(m=>{
-        if(!m.embed) return; // تجاهل الأفلام بدون رابط كامل
         if(!genres[m.genre]) genres[m.genre]=[];
         genres[m.genre].push(m);
     });
@@ -36,7 +35,7 @@ fetch("movies.json")
     Object.keys(genres).forEach(g=>{
         const moviesHTML = genres[g].map(m=>`
         <div class="card" onclick="openMovie('${m.id}')">
-            <img src="${m.poster}" alt="${m.title_ar}">
+            <img src="${m.poster}" alt="${m.title_en}">
         </div>`).join("");
 
         content.innerHTML += `
