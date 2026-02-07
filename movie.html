@@ -34,7 +34,7 @@ fetch("movies.json")
             <p><strong>Genre:</strong> ${movie.genre}</p>
             <p><strong>Release Date:</strong> ${movie.release_date}</p>
             <p>${movie.description}</p>
-            <iframe src="https://www.youtube.com/${encodeURIComponent(movie + ' trailer')}" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(movie.title_en + ' trailer')}" allowfullscreen></iframe>
             <br>
             <a href="https://www.google.com/search?q=watch+${encodeURIComponent(movie.title_en)}" target="_blank">
                 <button>شاهد الآن على المنصة الرسمية</button>
@@ -48,4 +48,3 @@ fetch("movies.json")
 
 </body>
 </html>
-
